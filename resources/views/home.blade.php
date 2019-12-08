@@ -2,12 +2,12 @@
 
 @section('content')
 
-  <pagina tamanho="10" >
+  <pagina tamanho="16" >
     <painel titulo="Dashboard">
 
       <div class="row">
-        <div class="col-md-4">
-          <caixa qtd="80" titulo="Usuarios" url="#" cor="orange" ></caixa>
+        <div class="col-md-6">
+          <caixa titulo="Usuários" url="#" cor="#1E90FF" ></caixa>
         </div> 
       </div>
     </painel>
