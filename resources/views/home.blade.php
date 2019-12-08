@@ -7,7 +7,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <caixa titulo="Usuários" url="#" cor="#1E90FF" ></caixa>
+          <caixa titulo="Usuários" url="{{route('usuarios.index')}}" cor="#1E90FF" ></caixa>
         </div> 
       </div>
     </painel>
