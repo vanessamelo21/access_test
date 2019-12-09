@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Usuario;
 
 class UsuariosController extends Controller
 {
@@ -17,14 +17,17 @@ class UsuariosController extends Controller
     {
     
 
-        $listaUsuarios = json_encode([
+        /*$listaUsuarios = json_encode([
           ["id"=>1,"nome"=>"Vanessa","cpf"=>"99999999-99","data_nasc"=>"99/99/99","email"=>"us@gmail.com","tel"=>"9999999",
           "end"=>"rua tal","cep"=>"9999999","cid"=>"Manaus","est"=>"Am"]
-        ]);
+        ]);*/
 
     
-
-        return view('admin.usuarios.index',compact('listaUsuarios'));
+          $listaUsuarios = json_encode(Usuario::select('id','nome','data_nasc','email','cel','end','cid','est','cep')->get());
+  
+  
+          return view('admin.usuarios.index',compact('listaUsuarios'));
+      
     }
 
     /**
@@ -45,7 +48,19 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validacao = \Validator::make($data,[
+          'nome' => 'required',
+          'email' => 'required',
+          'data_nasc' => 'required',
+        ]);
+  
+        if($validacao->fails()){
+          return redirect()->back()->withErrors($validacao)->withInput();
+        }
+  
+        Usuario::create($data);
+        return redirect()->back();
 
     }
 
@@ -58,6 +73,8 @@ class UsuariosController extends Controller
     public function show($id)
     {
         //
+        return Usuario::find($id);
+
     }
 
     /**
@@ -80,7 +97,19 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $data = $request->all();
+        $validacao = \Validator::make($data,[
+          'nome' => 'required',
+          'email' => 'required',
+          'data_nasc' => 'required',
+        ]);
+  
+        if($validacao->fails()){
+          return redirect()->back()->withErrors($validacao)->withInput();
+        }
+  
+        Usuario::find($id)->update($data);
+        return redirect()->back();
     }
 
     /**
@@ -91,7 +120,8 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Usuario::find($id)->delete();
+        return redirect()->back();
     }
 
     
